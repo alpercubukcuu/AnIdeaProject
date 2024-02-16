@@ -182,7 +182,7 @@ public class Repository<T> : IRepository<T> where T : BaseEntity, new()
 
             if (entity.Id == null) throw new ArgumentNullException(nameof(entity), "Entity degeri bos olamaz!");
 
-            EntityEntry entry = this.table.Entry(entity);
+            EntityEntry entry = this.Table.Entry(entity);
             if (entry != null)
             {
                 entity.GetType().GetProperties().ToList()?.ForEach(p =>
@@ -201,7 +201,7 @@ public class Repository<T> : IRepository<T> where T : BaseEntity, new()
                 });
 
                 int sevStatus = await _context.SaveChangesAsync();
-                this.table.Entry(entity).State = EntityState.Detached; // takipten çıkarma
+                this.Table.Entry(entity).State = EntityState.Detached; // takipten çıkarma
 
                 if (sevStatus > 0)
                     return entity;

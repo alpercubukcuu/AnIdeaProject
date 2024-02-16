@@ -17,11 +17,11 @@ public class Pages : BaseEntity
     public PageCategories Category { get; set; }     
 
     public bool IsActive { get; set; }
-    public DateTime PublishedDate { get; set; }
+    public DateTime? PublishedDate { get; set; }
 
     // SEO için ekstra özellikler
-    public string MetaKeywords { get; set; }
-    public string MetaDescription { get; set; }
+    public string? MetaKeywords { get; set; }
+    public string? MetaDescription { get; set; }
 
   
     public string LanguageCode { get; set; }

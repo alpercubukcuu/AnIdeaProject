@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Context;
 
@@ -10,9 +11,11 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240216084409_updateEntites")]
+    partial class updateEntites
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,6 +48,9 @@ namespace Persistence.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<Guid?>("ParentId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Slug")
                         .IsRequired()
@@ -136,9 +142,6 @@ namespace Persistence.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<Guid>("PageId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid?>("ParentId")
                         .HasColumnType("char(36)");
 
                     b.Property<int?>("RedirectType")

@@ -13,5 +13,5 @@ public class PageCategories : BaseEntity
     public string Slug { get; set; }
     public string ControllerName { get; set; }
     public string ActionName { get; set; }
-    public Guid ParentId { get; set; }
+    
 }
