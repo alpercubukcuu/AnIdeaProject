@@ -1,15 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Application.Interface.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Presistence.Context;
+using Persistence.Context;
+using Persistence.Repositories;
 
-namespace Presistence;
+namespace Persistence.ServiceRegistration;
 
 public static class ServiceRegistration
 {
     public static void AddPersistenceServices(this IServiceCollection serviceCollection, string connectionString)
     {
         serviceCollection.AddDbContext<DataContext>(opt => opt.UseMySQL(connectionString));
+
+        serviceCollection.AddTransient<IPageCategoryRepository, PageCategoryRepository>();
 
 
     }

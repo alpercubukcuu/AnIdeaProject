@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Presistence.Context;
+using Persistence.Context;
 
 #nullable disable
 
-namespace Presistence.Migrations
+namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
     [Migration("20240215041148_InitialCreate")]

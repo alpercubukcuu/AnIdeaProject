@@ -1,7 +1,13 @@
+using System.Reflection;
+using Application;
+using Persistence.ServiceRegistration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddPersistenceServices(builder.Configuration.GetConnectionString("Mysql")!);
+builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 

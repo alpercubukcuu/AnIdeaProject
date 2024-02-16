@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Presistence.Context;
+using Persistence.Context;
 
 
-namespace OnionArcExample.Persistence.Context;
+namespace Persistence.DesignTimeDbContextFactory;
 
 public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<DataContext>
 {
