@@ -9,8 +9,8 @@ namespace Application.Interface.ResutRepository;
 
 public class ResultData<T> : IResultData<T>
 {
-    public bool IsSuccess { get; private set; }
-    public string Message { get; private set; }
+    public bool IsSuccess { get; set; }
+    public string Message { get; set; }
     public T Data { get; private set; }
 
     public IResultData<T> SetData(T data)

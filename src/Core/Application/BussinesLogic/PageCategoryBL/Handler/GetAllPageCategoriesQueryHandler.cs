@@ -26,6 +26,7 @@ public class GetAllPageCategoriesQueryHandler : IRequestHandler<GetAllPageCatego
         var categories = await _pageCategoryRepository.GetAllAsync();
         var map = _mapper.Map<List<PageCategoryDto>>(categories);
 
+        result.IsSuccess = true;
         result.SetData(map);
 
         return result;

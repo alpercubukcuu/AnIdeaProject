@@ -8,8 +8,8 @@ namespace Application.Interface.ResutRepository;
 
 public interface IResultData<T>
 {
-    bool IsSuccess { get; }
-    string Message { get; }
+    bool IsSuccess { get; set; }
+    string Message { get; set; }
     T Data { get; }
 
     public IResultData<T> SetData(T data);
