@@ -32,44 +32,40 @@ public class SlugRoutingMiddleware
                 var urlData = await mediator.Send(new GetRouteInfoUrlRecordQuery() { Route = requestedPath });
                 if (!urlData.IsSuccess)
                 {
-                    context.Response.StatusCode = 404; // Not Found
-                    return; // Durum başarısızsa, burada işlemi durdurun.
+                    context.Response.StatusCode = 404; 
+                    return; 
                 }
 
                 var pageData = await mediator.Send(new GetUrlIdPageQuery() { UrlId = urlData.Data.Id });
                 if (!pageData.IsSuccess)
                 {
-                    context.Response.StatusCode = 404; // Not Found
-                    return; // Durum başarısızsa, burada işlemi durdurun.
+                    context.Response.StatusCode = 404;
+                    return; 
                 }
 
                 var pageCategory = await mediator.Send(new GetByIdPageCategoriesQuery() { PageCategoryId = pageData.Data.CategoryId });
                 if (!pageCategory.IsSuccess)
                 {
-                    context.Response.StatusCode = 404; // Not Found
-                    return; // Durum başarısızsa, burada işlemi durdurun.
+                    context.Response.StatusCode = 404; 
+                    return; 
                 }
+               
+                var controllerName = pageCategory.Data.ControllerName; 
+                var actionName = pageCategory.Data.ActionName; 
 
-                // Burada pageCategory ile ilgili yapmanız gereken işlemler varsa ekleyin
-                // Örneğin, pageCategory verisine bağlı olarak bir işlem yapmak isteyebilirsiniz.
-
-                // İsteği MVC yönlendirme yapısına göre yeniden yaz
-                var controllerName = pageCategory.Data.ControllerName; // Varsayalım ki bu değer "Home"
-                var actionName = pageCategory.Data.ActionName; // Varsayalım ki bu değer "Index"
-
-                // İsteği yeniden yaz
+               
                 var newPath = $"/{controllerName}/{actionName}";
                 context.Request.Path = newPath;
-                // Query string'i koruyun (varsa)
+                
                 context.Request.QueryString = QueryString.Create(context.Request.Query);
 
-                // MVC pipeline'ını çalıştırın
+                
                 await _next(context);
                 return;
             }
         }
 
-        // Eğer bir üstteki if koşullarına girilmediyse, normal akışa devam edin
+       
         await _next(context);
     }
 }
