@@ -9,10 +9,10 @@ namespace Application.Dto;
 
 public class UrlRecordDto : BaseDto
 {
-    public string Slug { get; set; }
-    public Guid PageId { get; set; }
-    public Pages Page { get; set; }
-
+    public string Path { get; set; }
+    public string FullPath { get; set; }
+    public Guid? ParentId { get; set; }
+    public bool? IsRoot { get; set; }
 
     public string RedirectUrl { get; set; } 
     public int? RedirectType { get; set; }

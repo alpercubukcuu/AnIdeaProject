@@ -19,7 +19,7 @@ public class DataContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Fluent API ile model yapılandırmasını burada yapılabilir.
+        
     }
 
 }

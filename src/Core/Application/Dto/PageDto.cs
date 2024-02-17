@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domain.Entities;
+
 
 namespace Application.Dto
 {
@@ -14,6 +11,9 @@ namespace Application.Dto
 
         public Guid CategoryId { get; set; }
         public PageCategoryDto Category { get; set; }
+
+        public Guid UrlId { get; set; }
+        public UrlRecord Url { get; set; }
 
         public bool IsActive { get; set; }
         public DateTime PublishedDate { get; set; }

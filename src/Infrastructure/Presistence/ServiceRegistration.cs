@@ -13,6 +13,8 @@ public static class ServiceRegistration
         serviceCollection.AddDbContext<DataContext>(opt => opt.UseMySQL(connectionString));
 
         serviceCollection.AddTransient<IPageCategoryRepository, PageCategoryRepository>();
+        serviceCollection.AddTransient<IPageRepository, PageRepository>();
+        serviceCollection.AddTransient<IUrlRecordRepository, UrlRecordRepository>();
 
 
     }

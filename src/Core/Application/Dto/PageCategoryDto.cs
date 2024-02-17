@@ -9,8 +9,10 @@ namespace Application.Dto;
 public class PageCategoryDto: BaseDto
 {
     public string Name { get; set; }
+    public string Description { get; set; }
     public string Slug { get; set; }
     public string ControllerName { get; set; }
     public string ActionName { get; set; }
+    public byte PageType { get; set; }
     public Guid ParentId { get; set; }
 }

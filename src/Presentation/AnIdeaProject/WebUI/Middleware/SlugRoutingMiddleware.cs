@@ -1,4 +1,8 @@
-﻿namespace WebUI.Middleware;
+﻿using Application.BussinesLogic.UrlRecordBL.Queries;
+using MediatR;
+using WebUI.Helper;
+
+namespace WebUI.Middleware;
 
 public class SlugRoutingMiddleware
 {
@@ -9,27 +13,27 @@ public class SlugRoutingMiddleware
         _next = next;
     }
 
-    public async Task Invoke(HttpContext context /* diğer bağımlılıklarınızı buraya ekleyebilirsiniz, örneğin veritabanı servisi */)
+    public async Task Invoke(HttpContext context)
     {
-        var requestedPath = context.Request.Path.Value;
-
-        if (!string.IsNullOrEmpty(requestedPath) && requestedPath != "/")
+        using (var scope = context.RequestServices.CreateScope())
         {
-            // Veritabanından slug'a göre route bilgisi çek
-            // Örneğin: var routeInfo = await databaseService.GetRouteInfoBySlug(requestedPath);
+            var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+            var requestedPath = context.Request.Path.Value;
 
-            // Burada routeInfo'nun controller ve action isimlerini alıp kullanabilirsiniz
-            // Örneğin: var controllerName = routeInfo.Controller; var actionName = routeInfo.Action;
+            if (!string.IsNullOrEmpty(requestedPath))
+            {
+                if(!WebHelper.IsHomePage(requestedPath))
+                {
+                    requestedPath = WebHelper.GetLastSegment(requestedPath);
+                }
 
-            // Eğer bir route bilgisi bulunamazsa, hata yönetimi yapabilirsiniz.
-            // Örneğin: context.Response.StatusCode = 404; return;
+                var urlData = await mediator.Send(new GetRouteInfoUrlRecordQuery() { Route = requestedPath });
+                if(!urlData.IsSuccess) { await _next(context); }
 
-            // Route bilgisine göre yönlendirme yap
-            // Örneğin: context.Request.Path = $"/{controllerName}/{actionName}";
+                //var pageData = 
+                // Kalan işlemleriniz...
+            }
         }
-
-        // Sonraki middleware'e geç
-
 
         await _next(context);
     }

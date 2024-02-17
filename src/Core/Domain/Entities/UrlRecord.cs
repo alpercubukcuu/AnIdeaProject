@@ -1,22 +1,13 @@
 ﻿using Domain.Common;
 
 
+
 namespace Domain.Entities;
 
 public class UrlRecord : BaseEntity
 {
-    public Guid Id { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime? UpdatedAt { get; set; }
-    public int? CreatedBy { get; set; }
-    public int? UpdatedBy { get; set; }
-    public bool IsDeleted { get; set; }
-
-
-    public string Slug { get; set; } 
-    public Guid PageId { get; set; }
-    public Pages Page { get; set; }
-
+    public string Path { get; set; }
+    public string FullPath { get; set; }
     public Guid? ParentId { get; set; }
     public bool? IsRoot { get; set; }
 

@@ -11,8 +11,8 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240216035628_pageCategoryUpdate")]
-    partial class pageCategoryUpdate
+    [Migration("20240217095125_EmbededMigration")]
+    partial class EmbededMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,19 +42,28 @@ namespace Persistence.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<string>("EntityName")
+                        .HasColumnType("longtext");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<Guid>("ParentId")
-                        .HasColumnType("char(36)");
+                    b.Property<byte>("PageType")
+                        .HasColumnType("tinyint unsigned");
 
                     b.Property<string>("Slug")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime(6)");
@@ -76,15 +85,16 @@ namespace Persistence.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
@@ -97,14 +107,12 @@ namespace Persistence.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("MetaDescription")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("MetaKeywords")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("PublishedDate")
+                    b.Property<DateTime?>("PublishedDate")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Slug")
@@ -113,7 +121,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime(6)");
@@ -121,9 +130,14 @@ namespace Persistence.Migrations
                     b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("UrlId")
+                        .HasColumnType("char(36)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("UrlId");
 
                     b.ToTable("Pages");
                 });
@@ -140,21 +154,27 @@ namespace Persistence.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
+                    b.Property<string>("FullPath")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<Guid>("PageId")
+                    b.Property<bool?>("IsRoot")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<Guid?>("ParentId")
                         .HasColumnType("char(36)");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("RedirectType")
                         .HasColumnType("int");
 
                     b.Property<string>("RedirectUrl")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Slug")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -164,8 +184,6 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PageId");
 
                     b.ToTable("UrlRecord");
                 });
@@ -178,18 +196,15 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("Domain.Entities.UrlRecord", b =>
-                {
-                    b.HasOne("Domain.Entities.Pages", "Page")
+                    b.HasOne("Domain.Entities.UrlRecord", "Url")
                         .WithMany()
-                        .HasForeignKey("PageId")
+                        .HasForeignKey("UrlId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Page");
+                    b.Navigation("Category");
+
+                    b.Navigation("Url");
                 });
 #pragma warning restore 612, 618
         }

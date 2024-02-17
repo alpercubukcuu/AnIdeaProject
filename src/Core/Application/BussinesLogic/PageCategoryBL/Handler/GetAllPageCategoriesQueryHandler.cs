@@ -24,9 +24,11 @@ public class GetAllPageCategoriesQueryHandler : IRequestHandler<GetAllPageCatego
         IResultData<List<PageCategoryDto>> result = new ResultData<List<PageCategoryDto>>();
 
         var categories = await _pageCategoryRepository.GetAllAsync();
-        var map = _mapper.Map<List<PageCategoryDto>>(categories);
+        if (categories == null) { result.IsSuccess = false; result.Message = "Didn't find datas"; return result; }
 
+        var map = _mapper.Map<List<PageCategoryDto>>(categories);
         result.IsSuccess = true;
+        result.Message = "Success";
         result.SetData(map);
 
         return result;
