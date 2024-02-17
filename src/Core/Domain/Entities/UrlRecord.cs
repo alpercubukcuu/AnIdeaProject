@@ -18,6 +18,7 @@ public class UrlRecord : BaseEntity
     public Pages Page { get; set; }
 
     public Guid? ParentId { get; set; }
+    public bool? IsRoot { get; set; }
 
 
     public string? RedirectUrl { get; set; } // Bu URL için bir yönlendirme varsa

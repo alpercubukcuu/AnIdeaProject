@@ -1,6 +1,7 @@
 using System.Reflection;
 using Application;
 using Persistence.ServiceRegistration;
+using WebUI.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,10 +25,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseSlugRouting();
+
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();
