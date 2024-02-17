@@ -26,7 +26,7 @@ public class GetRouteInfoUrlRecordHandler : IRequestHandler<GetRouteInfoUrlRecor
 
         if(urlData.ParentId is not null) 
         {
-           var relatedUrlData = _urlRecordRepository.GetSingle(predicate: d => d.IsDeleted != false && d.Id == urlData.ParentId);
+           var relatedUrlData = _urlRecordRepository.GetSingle(predicate: d => d.IsDeleted == false && d.Id == urlData.ParentId);
             if(relatedUrlData is not null)
             {
                 urlData.Path = $"{relatedUrlData.Path}/{urlData.Path}";
