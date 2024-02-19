@@ -10,7 +10,7 @@ public static class WebHelper
     {
         string path = route.ToString().ToLower().Split("/").Last();
 
-        string[] pathArray = new string[] { "en", "ru", "fr", "it", "es", "de", "nl", "sv", "da", "" };
+        string[] pathArray = new string[] { "tr", "ru", "fr", "it", "es", "de", "nl", "sv", "da", "" };
         if (pathArray.Any(x => x.Equals(path)))
         {
             return true;

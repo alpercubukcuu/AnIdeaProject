@@ -1,0 +1,24 @@
+﻿@model ErrorModel
+
+@* <h1>@Model.ErrMesage</h1> *@
+
+
+<div class="noise"></div>
+<div class="overlay"></div>
+<div class="terminal">
+    <h1>Error <span class="errorcode">404</span></h1>
+    <p class="output">@Model.ErrMesage</p>
+    <p class="output">Please try to <a href="#1">go back</a> or <a href="#2">return to the homepage</a>.</p>
+    <p class="output">Good luck.</p>
+</div>
+
+
+@section Styles{
+    <link href="/css/errpage/errpage.css" rel="stylesheet" />
+}
+
+@* @section Scripts{
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+    <script src="js/errpage/errpage.js"></script>
+} *@
+

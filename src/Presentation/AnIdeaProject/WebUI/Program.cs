@@ -1,7 +1,7 @@
-using System.Reflection;
 using Application;
 using Persistence.ServiceRegistration;
-using WebUI.Middleware;
+using WebUI.Infrastructure.Routing;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddPersistenceServices(builder.Configuration.GetConnectionString("Mysql")!);
 builder.Services.AddApplicationServices();
+builder.Services.AddTransient<MyDynamicRouteHandler>();
 
 var app = builder.Build();
 
@@ -27,10 +28,11 @@ app.UseRouting();
 app.UseAuthentication(); 
 app.UseAuthorization();
 
-app.UseSlugRouting(); 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapDynamicControllerRoute<MyDynamicRouteHandler>("{**slug}");
+    
+});
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

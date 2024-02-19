@@ -13,4 +13,8 @@
     <ProjectReference Include="..\..\..\Infrastructure\Presistence\Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\js\errPage\" />
+  </ItemGroup>
+
 </Project>
