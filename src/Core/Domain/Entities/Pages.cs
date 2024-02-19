@@ -27,7 +27,8 @@ public class Pages : BaseEntity
     public UrlRecord Url { get; set; }
 
 
-    public Guid? LanguageId { get; set; }
+    public Guid LanguageId { get; set; }
+    public Languages Language { get; set; }
 
     public bool IsActive { get; set; }
     public DateTime? PublishedDate { get; set; }

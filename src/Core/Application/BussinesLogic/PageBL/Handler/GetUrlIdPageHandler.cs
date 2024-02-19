@@ -23,7 +23,8 @@ public class GetUrlIdPageHandler : IRequestHandler<GetUrlIdPageQuery, IResultDat
     {
         IResultData<PageDto> result = new ResultData<PageDto>();
 
-        var pageData = _pageRepository.GetSingle(predicate: d => d.IsDeleted == false && d.UrlId == request.UrlId, include: d => d.Include(p=>p.Category));
+        var pageData = _pageRepository.GetSingle(predicate: d => d.IsDeleted == false && d.UrlId == request.UrlId, include: d => d.Include(p=>p.Category).Include(x=>x.Language));   
+
         if (pageData == null) { result.IsSuccess = false; result.Message = "Didn't find data about route!"; return result; }
 
 
