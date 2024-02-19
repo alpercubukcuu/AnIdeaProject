@@ -4,6 +4,7 @@ using Application.Interface.Repositories;
 using Application.Interface.ResutRepository;
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Application.BussinesLogic.PageBL.Handler;
@@ -22,7 +23,7 @@ public class GetUrlIdPageHandler : IRequestHandler<GetUrlIdPageQuery, IResultDat
     {
         IResultData<PageDto> result = new ResultData<PageDto>();
 
-        var pageData = _pageRepository.GetSingle(predicate: d => d.IsDeleted == false && d.UrlId == request.UrlId);
+        var pageData = _pageRepository.GetSingle(predicate: d => d.IsDeleted == false && d.UrlId == request.UrlId, include: d => d.Include(p=>p.Category));
         if (pageData == null) { result.IsSuccess = false; result.Message = "Didn't find data about route!"; return result; }
 
 

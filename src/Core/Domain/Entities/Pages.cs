@@ -23,9 +23,11 @@ public class Pages : BaseEntity
     public PageCategories Category { get; set; }
 
     public Guid UrlId { get; set; }
-
     [ForeignKey(nameof(UrlId))]
     public UrlRecord Url { get; set; }
+
+
+    public Guid? LanguageId { get; set; }
 
     public bool IsActive { get; set; }
     public DateTime? PublishedDate { get; set; }

@@ -42,16 +42,10 @@ public class SlugRoutingMiddleware
                     context.Response.StatusCode = 404;
                     return; 
                 }
-
-                var pageCategory = await mediator.Send(new GetByIdPageCategoriesQuery() { PageCategoryId = pageData.Data.CategoryId });
-                if (!pageCategory.IsSuccess)
-                {
-                    context.Response.StatusCode = 404; 
-                    return; 
-                }
+                
                
-                var controllerName = pageCategory.Data.ControllerName; 
-                var actionName = pageCategory.Data.ActionName; 
+                var controllerName = pageData.Data.Category.ControllerName; 
+                var actionName = pageData.Data.Category.ActionName; 
 
                
                 var newPath = $"/{controllerName}/{actionName}";
