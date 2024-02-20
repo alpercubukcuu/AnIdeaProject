@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Context;
 
@@ -10,66 +11,21 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240219234504_addBlogEntity2")]
+    partial class addBlogEntity2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Domain.Entities.BlogCategories", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int?>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<Guid>("LanguageId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UrlId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LanguageId");
-
-                    b.HasIndex("UrlId");
-
-                    b.ToTable("BlogCtegories");
-                });
-
             modelBuilder.Entity("Domain.Entities.Blogs", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("BlogCategoryId")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Content")
@@ -115,8 +71,6 @@ namespace Persistence.Migrations
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BlogCategoryId");
 
                     b.HasIndex("LanguageId");
 
@@ -351,33 +305,8 @@ namespace Persistence.Migrations
                     b.ToTable("UrlRecord");
                 });
 
-            modelBuilder.Entity("Domain.Entities.BlogCategories", b =>
-                {
-                    b.HasOne("Domain.Entities.Languages", "Language")
-                        .WithMany()
-                        .HasForeignKey("LanguageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.UrlRecord", "Url")
-                        .WithMany()
-                        .HasForeignKey("UrlId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Language");
-
-                    b.Navigation("Url");
-                });
-
             modelBuilder.Entity("Domain.Entities.Blogs", b =>
                 {
-                    b.HasOne("Domain.Entities.BlogCategories", "BlogCategory")
-                        .WithMany("Blogs")
-                        .HasForeignKey("BlogCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entities.Languages", "Language")
                         .WithMany()
                         .HasForeignKey("LanguageId")
@@ -389,8 +318,6 @@ namespace Persistence.Migrations
                         .HasForeignKey("UrlId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("BlogCategory");
 
                     b.Navigation("Language");
 
@@ -422,11 +349,6 @@ namespace Persistence.Migrations
                     b.Navigation("Language");
 
                     b.Navigation("Url");
-                });
-
-            modelBuilder.Entity("Domain.Entities.BlogCategories", b =>
-                {
-                    b.Navigation("Blogs");
                 });
 #pragma warning restore 612, 618
         }

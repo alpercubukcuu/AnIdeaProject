@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Server.IIS;
 using WebUI.Helper;
+using WebUI.ViewModel;
 
 namespace WebUI.Infrastructure.Routing
 {
-    public class MyDynamicRouteHandler : DynamicRouteValueTransformer
+    public class DynamicRouteHandler : DynamicRouteValueTransformer
     {
         private readonly IMediator _mediator;
-        public MyDynamicRouteHandler(IMediator mediator)
+        public DynamicRouteHandler(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -37,7 +38,7 @@ namespace WebUI.Infrastructure.Routing
                     return values;
                 }
 
-                var pageData = await _mediator.Send(new GetUrlIdPageQuery() { UrlId = urlData.Data.Id });
+                var pageData = await _mediator.Send(new GetUrlIdPageQuery() { UrlId = urlData.Data.RootUrlId });
                 if (!pageData.IsSuccess)
                 {
                     values["controller"] = "Error";
@@ -45,20 +46,21 @@ namespace WebUI.Infrastructure.Routing
                     return values;
                 }
 
+              
 
-                 controllerName = pageData.Data.Category.ControllerName;
+				 controllerName = pageData.Data.Category.ControllerName;
                  actionName = pageData.Data.Category.ActionName;
 
                 values["controller"] = controllerName;
                 values["action"] = actionName;
+				values["urlid"] = urlData.Data.Id;
 
-                
 
-            }
+			}
             else
             {
                 values["controller"] = "Home";
-                values["action"] = "Error";
+                values["action"] = "Index";
             }
 
             return values;

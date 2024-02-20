@@ -12,6 +12,7 @@ public class UrlRecordDto : BaseDto
     public string Path { get; set; }
     public string FullPath { get; set; }
     public Guid? ParentId { get; set; }
+    public Guid RootUrlId { get; set; }
     public bool? IsRoot { get; set; }
 
     public string RedirectUrl { get; set; }

@@ -24,16 +24,25 @@ public class GetRouteInfoUrlRecordHandler : IRequestHandler<GetRouteInfoUrlRecor
         var urlData = _urlRecordRepository.GetSingle(predicate: d => d.IsDeleted == false && d.Path == request.Route);
         if (urlData == null) { result.IsSuccess = false; result.Message = "Didn't find data about route!"; return result; }
 
-        if(urlData.ParentId is not null) 
-        {
-           var relatedUrlData = _urlRecordRepository.GetSingle(predicate: d => d.IsDeleted == false && d.Id == urlData.ParentId);
-            if(relatedUrlData is not null)
-            {
-                urlData.Path = $"{relatedUrlData.Path}/{urlData.Path}";
-            }
-        }
+		var map = _mapper.Map<UrlRecordDto>(urlData);
+		map.RootUrlId = urlData.Id;
+		var parentId = urlData.ParentId;
 
-        var map = _mapper.Map<UrlRecordDto>(urlData);
+		while (parentId is not null)
+		{
+			var parentData = _urlRecordRepository.GetSingle(predicate: d => d.IsDeleted == false && d.Id == parentId);
+			if (parentData != null)
+			{
+				map.RootUrlId = parentData.Id;
+                parentId = parentData.ParentId;
+			}
+			else
+			{				
+				break;
+			}
+		}
+
+		
         result.IsSuccess = true;
         result.Message = "Success";
         result.SetData(map);

@@ -15,8 +15,10 @@ public static class ServiceRegistration
         serviceCollection.AddTransient<IPageCategoryRepository, PageCategoryRepository>();
         serviceCollection.AddTransient<IPageRepository, PageRepository>();
         serviceCollection.AddTransient<IUrlRecordRepository, UrlRecordRepository>();
+		serviceCollection.AddTransient<IBlogRepository, BlogRepository>();
+		serviceCollection.AddTransient<IBlogCategoryRepository, BlogCategoryRepository>();
 
 
-    }
+	}
 
 }

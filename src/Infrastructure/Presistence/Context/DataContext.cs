@@ -15,7 +15,9 @@ public class DataContext : DbContext
 
     public DbSet<PageCategories> PageCategories { get; set; }
     public DbSet<Pages> Pages { get; set; }
-    public DbSet<UrlRecord> UrlRecord { get; set; }
+	public DbSet<Blogs> Blogs { get; set; }
+	public DbSet<BlogCategories> BlogCtegories { get; set; }
+	public DbSet<UrlRecord> UrlRecord { get; set; }
     public DbSet<Languages> Languages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

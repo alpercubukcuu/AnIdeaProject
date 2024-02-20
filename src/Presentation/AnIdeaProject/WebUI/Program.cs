@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddPersistenceServices(builder.Configuration.GetConnectionString("Mysql")!);
 builder.Services.AddApplicationServices();
-builder.Services.AddTransient<MyDynamicRouteHandler>();
+builder.Services.AddTransient<DynamicRouteHandler>();
 
 var app = builder.Build();
 
@@ -30,7 +30,7 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapDynamicControllerRoute<MyDynamicRouteHandler>("{**slug}");
+    endpoints.MapDynamicControllerRoute<DynamicRouteHandler>("{**slug}");
     
 });
 
