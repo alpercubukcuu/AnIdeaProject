@@ -1,3 +1,4 @@
+using Application.BussinesLogic.PageBL.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -17,9 +18,14 @@ namespace WebUI.Controllers
             _mediator = mediator;
         }
 
-        public IActionResult Index()
-        {		
-			return View();
+        public async Task<IActionResult> Index(string urlId)
+        {
+            Guid UrlId = Guid.Parse(urlId);
+
+            var pageData = await _mediator.Send(new GetUrlIdPageQuery() { UrlId = UrlId });
+            if (!pageData.IsSuccess) { return BadRequest(pageData.Message); }
+
+			return View(pageData.Data);
         }
 
         public IActionResult Privacy()

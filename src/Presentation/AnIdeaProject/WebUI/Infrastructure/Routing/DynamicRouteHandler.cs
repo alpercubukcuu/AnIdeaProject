@@ -53,7 +53,8 @@ namespace WebUI.Infrastructure.Routing
 
                 values["controller"] = controllerName;
                 values["action"] = actionName;
-				values["urlid"] = urlData.Data.Id;
+				values["urlId"] = urlData.Data.Id;
+                values["languageId"] = pageData.Data.LanguageId;
 
 
 			}
