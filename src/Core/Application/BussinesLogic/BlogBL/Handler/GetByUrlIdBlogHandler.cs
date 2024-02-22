@@ -9,24 +9,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.BussinesLogic.BlogBL.Handler;
 
-public class GetAllBlogHandler : IRequestHandler<GetAllBlogQuery, IResultData<List<BlogDto>>>
+public class GetByUrlIdBlogHandler : IRequestHandler<GetByUrlIdBlogQuery, IResultData<BlogDto>>
 {
     private readonly IBlogRepository _blogRepository;
 	private readonly IMapper _mapper;
-	public GetAllBlogHandler(IBlogRepository blogRepository, IMapper mapper)
+	public GetByUrlIdBlogHandler(IBlogRepository blogRepository, IMapper mapper)
 	{
 		_blogRepository = blogRepository;
 		_mapper = mapper;
 	}
 
-	public async Task<IResultData<List<BlogDto>>> Handle(GetAllBlogQuery request, CancellationToken cancellationToken)
+	public async Task<IResultData<BlogDto>> Handle(GetByUrlIdBlogQuery request, CancellationToken cancellationToken)
 	{
-		IResultData<List<BlogDto>> result = new ResultData<List<BlogDto>>();
+		IResultData<BlogDto> result = new ResultData<BlogDto>();
 
-		var blogs =  _blogRepository.GetAll( predicate: p => p.IsDeleted == false && p.LanguageId == request.LanguageId, include: p=>p.Include(d=>d.Url).Include(d=>d.Language));
+		var blogs =  _blogRepository.GetSingle( predicate: p => p.IsDeleted == false && p.UrlId == request.UrlId,include: p => p.Include(d => d.Url).Include(d => d.Language));
 		if (blogs == null) { result.IsSuccess = false; result.Message = "Didn't find datas"; return result; }
 
-		var map = _mapper.Map<List<BlogDto>>(blogs);
+		var map = _mapper.Map<BlogDto>(blogs);
 		result.IsSuccess = true;
 		result.Message = "Success";
 		result.SetData(map);

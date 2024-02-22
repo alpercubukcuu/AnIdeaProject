@@ -9,24 +9,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.BussinesLogic.BlogCategoryBL.Handler;
 
-public class GetAllBlogCategoryHandler : IRequestHandler<GetAllBlogCategoryQuery, IResultData<List<BlogCategoryDto>>>
+public class GetByUrlIdBlogCategoryHandler : IRequestHandler<GetByUrlIdBlogCategoryQuery, IResultData<BlogCategoryDto>>
 {
     private readonly IBlogCategoryRepository _blogCategoryRepository;
     private readonly IMapper _mapper;
-	public GetAllBlogCategoryHandler(IBlogCategoryRepository blogCategoryRepository, IMapper mapper)
+	public GetByUrlIdBlogCategoryHandler(IBlogCategoryRepository blogCategoryRepository, IMapper mapper)
 	{
 		_blogCategoryRepository = blogCategoryRepository;
 		_mapper = mapper;
 	}
 
-	public async Task<IResultData<List<BlogCategoryDto>>> Handle(GetAllBlogCategoryQuery request, CancellationToken cancellationToken)
+	public async Task<IResultData<BlogCategoryDto>> Handle(GetByUrlIdBlogCategoryQuery request, CancellationToken cancellationToken)
 	{
-		IResultData<List<BlogCategoryDto>> result = new ResultData<List<BlogCategoryDto>>();
+		IResultData<BlogCategoryDto> result = new ResultData<BlogCategoryDto>();
 
-		var blogCategories =  _blogCategoryRepository.GetAll(predicate: d=>d.IsDeleted == false && d.LanguageId == request.LanguageId, include: p => p.Include(p=>p.Url).Include(p=>p.Language));
+		var blogCategories =  _blogCategoryRepository.GetSingle(predicate: d=>d.IsDeleted == false && d.UrlId == request.UrlId, include: p => p.Include(p=>p.Url).Include(p=>p.Language));
 		if (blogCategories == null) { result.IsSuccess = false; result.Message = "Didn't find datas"; return result; }
 
-		var map = _mapper.Map<List<BlogCategoryDto>>(blogCategories);
+		var map = _mapper.Map<BlogCategoryDto>(blogCategories);
 		result.IsSuccess = true;
 		result.Message = "Success";
 		result.SetData(map);

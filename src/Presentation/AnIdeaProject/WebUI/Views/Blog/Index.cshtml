@@ -1,0 +1,14 @@
+﻿@using Application.Dto
+@model List<BlogDto>
+
+
+    <div>
+
+    @foreach (BlogDto item in Model)
+    {
+        <p>@item.Title</p>
+        <p>@item.SubTitle</p>
+        <br />
+    }
+
+    </div>

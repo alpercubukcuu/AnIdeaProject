@@ -1,0 +1,14 @@
+﻿@using Application.Dto
+@model List<BlogCategoryDto>
+
+
+<div>
+
+    @foreach (BlogCategoryDto item in Model)
+    {
+        <h1>@item.Description</h1>
+        <br />
+       <a href="@item.Url.FullPath">@item.Title</a>
+    }
+
+</div>

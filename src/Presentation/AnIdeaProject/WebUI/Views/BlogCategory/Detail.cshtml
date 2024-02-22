@@ -1,0 +1,16 @@
+﻿@using WebUI.ViewModel
+@model BlogViewModel
+
+
+<h1>@Model.BlogCategory.Title</h1>
+<h2>@Model.BlogCategory.Description</h2>
+
+
+@foreach(var item in Model.Blogs)
+{    
+    <p>
+        @item.Title
+        <a href="@item.Url.FullPath">@item.SubTitle</a>
+    </p>
+    <br />
+}

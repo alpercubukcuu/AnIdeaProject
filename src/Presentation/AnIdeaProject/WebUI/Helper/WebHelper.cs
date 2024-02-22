@@ -66,8 +66,9 @@ public static class WebHelper
         // URL'i '/' karakterine göre ayırır ve boş olmayan segmentleri alır.
         var segments = url.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
-        // Son segmenti döndürür.
-        return segments.Length > 0 ? segments[^1] : string.Empty;
+        var lastSegment = segments.Length > 0 ? segments[^1] : string.Empty;
+        lastSegment = "/" + lastSegment;
+        return lastSegment;
     }
 
 }

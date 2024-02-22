@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebUI.Models;
-using WebUI.ViewModel;
 
 namespace WebUI.Controllers
 {
