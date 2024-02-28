@@ -1,6 +1,8 @@
 using Application;
+using Infrastructure.Model;
 using Persistence.ServiceRegistration;
 using WebUI.Infrastructure.Routing;
+using WebUI.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddPersistenceServices(builder.Configuration.GetConnectionString("Mysql")!);
 builder.Services.AddApplicationServices();
 builder.Services.AddTransient<DynamicRouteHandler>();
+builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("ConnectionStrings"));
 
 var app = builder.Build();
 

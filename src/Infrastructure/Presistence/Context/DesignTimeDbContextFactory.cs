@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Infrastructure.Model;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Options;
 using Persistence.Context;
 
 
@@ -7,9 +9,15 @@ namespace Persistence.DesignTimeDbContextFactory;
 
 public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<DataContext>
 {
+    private readonly DatabaseSettings _dbSettings;
+    public DesignTimeDbContextFactory(IOptions<DatabaseSettings> dbSettings)
+    {
+        _dbSettings = dbSettings.Value;
+    }
+
     public DataContext CreateDbContext(string[] args)
     {            
-        string connectionString = "Server=68.178.246.186;Port=3306;Database=AnIdeaProject;Uid=acteam;Pwd=t6qRGh4fshh5sZH;";
+        string connectionString = _dbSettings.Mysql;
         DbContextOptionsBuilder<DataContext> dbContextOptionsBuilder = new();
         dbContextOptionsBuilder.UseMySQL(connectionString);
         return new(dbContextOptionsBuilder.Options);
