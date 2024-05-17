@@ -2,5 +2,5 @@
 
 public class DatabaseSettings
 {
-    public string Mysql { get; set; }
+    public string Mssql { get; set; }
 }

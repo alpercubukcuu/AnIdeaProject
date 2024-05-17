@@ -9,17 +9,11 @@ namespace Persistence.DesignTimeDbContextFactory;
 
 public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<DataContext>
 {
-    private readonly DatabaseSettings _dbSettings;
-    public DesignTimeDbContextFactory(IOptions<DatabaseSettings> dbSettings)
-    {
-        _dbSettings = dbSettings.Value;
-    }
-
     public DataContext CreateDbContext(string[] args)
-    {            
-        string connectionString = _dbSettings.Mysql;
-        DbContextOptionsBuilder<DataContext> dbContextOptionsBuilder = new();
-        dbContextOptionsBuilder.UseMySQL(connectionString);
-        return new(dbContextOptionsBuilder.Options);
+    {
+        var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
+        optionsBuilder.UseSqlServer("Server=(local);Database=AoGen;Integrated Security=True;MultipleActiveResultSets=True;TrustServerCertificate=true");
+
+        return new DataContext(optionsBuilder.Options);
     }
 }

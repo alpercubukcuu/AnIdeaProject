@@ -9,10 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddPersistenceServices(builder.Configuration.GetConnectionString("Mysql")!);
+builder.Services.AddPersistenceServices(builder.Configuration.GetConnectionString("Mssql")!);
 builder.Services.AddApplicationServices();
 builder.Services.AddTransient<DynamicRouteHandler>();
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("ConnectionStrings"));
+
 
 var app = builder.Build();
 

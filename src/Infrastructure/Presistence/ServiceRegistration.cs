@@ -10,7 +10,7 @@ public static class ServiceRegistration
 {
     public static void AddPersistenceServices(this IServiceCollection serviceCollection, string connectionString)
     {
-        serviceCollection.AddDbContext<DataContext>(opt => opt.UseMySQL(connectionString));
+        serviceCollection.AddDbContext<DataContext>(opt => opt.UseSqlServer(connectionString));
 
         serviceCollection.AddTransient<IPageCategoryRepository, PageCategoryRepository>();
         serviceCollection.AddTransient<IPageRepository, PageRepository>();
